@@ -1,1 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
+
 @import "tailwindcss";
+
+:root {
+  --font-sans: "Outfit", sans-serif;
+  --color-neon-indigo: #6a5bff;
+  --color-neon-aqua: #00e5ff;
+  --color-deep-space: #0d0f1a;
+  --color-surface: #151829;
+  --color-border: #262a45;
+  --color-text-main: #f2f3ff;
+  --color-text-sub: #a8a9c5;
+  --color-error: #ff5b5b;
+  --color-success: #3cefa3;
+}
+
+body {
+  background-color: var(--color-deep-space);
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Aurora Background Animation */
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 50%, #151829 0%, #0d0f1a 100%);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-blob {
+  position: absolute;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 20s infinite alternate;
+  border-radius: 50%;
+}
+
+.aurora-blob-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: var(--color-neon-indigo);
+  animation-delay: 0s;
+}
+
+.aurora-blob-2 {
+  bottom: -10%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: var(--color-neon-aqua);
+  animation-delay: -5s;
+}
+
+.aurora-blob-3 {
+  top: 40%;
+  left: 40%;
+  width: 40vw;
+  height: 40vw;
+  background: var(--color-neon-indigo);
+  animation-delay: -10s;
+  opacity: 0.2;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(50px, 50px) rotate(10deg);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-deep-space);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-indigo);
+}

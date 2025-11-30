@@ -9,8 +9,12 @@ export default async function GenerateImage(prompt, images, apiToken) {
       },
       body: JSON.stringify({
         prompt: prompt,
-        images: images,
-        sync: false, // Ensure async mode
+        images: images
+          ? images.map((img) => img.replace(/^data:image\/\w+;base64,/, ""))
+          : undefined,
+        sync: false,
+        prompt_content_moderation: false,
+        visual_input_content_moderation: false,
       }),
     }
   );
