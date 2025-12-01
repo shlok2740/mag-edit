@@ -57,7 +57,23 @@ function Home() {
   const [showGallery, setShowGallery] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
 
+  // Image adjustment states
+  const [brightness, setBrightness] = useState(100);
+  const [contrast, setContrast] = useState(100);
+  const [saturation, setSaturation] = useState(100);
+  const [grayscale, setGrayscale] = useState(0);
+  const [opacity, setOpacity] = useState(100);
+
   const canvasRef = useRef(null);
+
+  // Computed CSS filter string
+  const computedFilters = `
+    brightness(${brightness}%)
+    contrast(${contrast}%)
+    saturate(${saturation}%)
+    grayscale(${grayscale}%)
+    opacity(${opacity}%)
+  `;
 
   useEffect(() => {
     const savedImage = sessionStorage.getItem("selectedImage");
@@ -295,7 +311,8 @@ function Home() {
                 <img
                   src={selectedImage}
                   alt="Canvas"
-                  className="max-h-[calc(100vh-180px)] max-w-full object-contain border border-[#262A45]"
+                  style={{ filter: computedFilters }}
+                  className="max-h-[calc(100vh-180px)] max-w-full object-contain border border-[#262A45] transition-all duration-200"
                 />
                 {/* Image Controls Overlay */}
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -431,28 +448,42 @@ function Home() {
                 ))}
               </div>
             ) : (
-              <div className="space-y-6">
-                {/* Visual Sliders (Placeholder for now) */}
-                {[
-                  "Exposure",
-                  "Contrast",
-                  "Highlights",
-                  "Shadows",
-                  "Saturation",
-                  "Vibrance",
-                ].map((label) => (
-                  <div key={label}>
-                    <div className="flex justify-between text-xs text-[#A8A9C5] mb-2">
-                      <span>{label}</span>
-                      <span>0</span>
-                    </div>
-                    <div className="h-1 bg-[#262A45] rounded-full overflow-hidden">
-                      <div className="h-full w-1/2 bg-[#6A5BFF] relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="p-5 space-y-6 overflow-y-auto">
+                <EffectSlider
+                  label="Brightness"
+                  value={brightness}
+                  setValue={setBrightness}
+                  min={0}
+                  max={200}
+                />
+                <EffectSlider
+                  label="Contrast"
+                  value={contrast}
+                  setValue={setContrast}
+                  min={0}
+                  max={200}
+                />
+                <EffectSlider
+                  label="Saturation"
+                  value={saturation}
+                  setValue={setSaturation}
+                  min={0}
+                  max={300}
+                />
+                <EffectSlider
+                  label="Grayscale"
+                  value={grayscale}
+                  setValue={setGrayscale}
+                  min={0}
+                  max={100}
+                />
+                <EffectSlider
+                  label="Opacity"
+                  value={opacity}
+                  setValue={setOpacity}
+                  min={0}
+                  max={100}
+                />
               </div>
             )}
           </div>
@@ -608,6 +639,30 @@ function Home() {
 
       {/* Hidden Canvas for saving */}
       <canvas ref={canvasRef} style={{ display: "none" }} />
+    </div>
+  );
+}
+
+// Reusable EffectSlider Component
+function EffectSlider({ label, value, setValue, min, max }) {
+  return (
+    <div className="flex flex-col space-y-2">
+      <div className="flex justify-between text-sm">
+        <span className="text-[#F2F3FF]">{label}</span>
+        <span className="text-[#A8A9C5]">{value}</span>
+      </div>
+
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(e) => setValue(Number(e.target.value))}
+        className="
+          w-full h-1 bg-[#262A45] rounded-lg appearance-none cursor-pointer
+          accent-[#6A5BFF]
+        "
+      />
     </div>
   );
 }
