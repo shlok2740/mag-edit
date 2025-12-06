@@ -210,7 +210,7 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#0D0F1A] text-[#F2F3FF] font-sans flex flex-col overflow-hidden relative">
+    <div className="h-screen w-full bg-[#0D0F1A] text-[#F2F3FF] font-sans flex flex-col overflow-hidden relative">
       {/* Aurora Background */}
       <div className="aurora-bg">
         <div className="aurora-blob aurora-blob-1"></div>
